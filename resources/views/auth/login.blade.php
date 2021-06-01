@@ -1,3 +1,7 @@
+{{-- TO DO:
+- przyciski z animacjami
+- walidacja --}}
+
 @extends('layouts.app')
 
 @section('content')
