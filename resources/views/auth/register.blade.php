@@ -3,8 +3,8 @@
 @section('content')
 <div class="container-fluid">
     <div class="row d-flex justify-content-center align-items-center">
-        <div class="d-none d-md-flex col-md align-items-end bg-login">
-            <h2 class="text-white pb-3 ps-3"><b>Cagliari</b><br>Miasto na Sardynii, Włochy</h2>
+        <div class="d-none d-md-flex col-md align-items-end bg-cover bg-register">
+            <h2 class="text-white pb-3 ps-3"><b>Twój nowy dom...</b><br>Gdzie tylko chcesz!</h2>
         </div>
             <div class="col-sm-12 col-md-6">
                 <div class="row d-flex justify-content-center">
