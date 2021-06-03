@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container-fluid bg-cover bg-home">
+<div class="container-fluid bg-cover_home bg-home">
     <nav class="row ">
         <div class="col-md-7 col-6 my-2">
 

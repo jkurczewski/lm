@@ -1,6 +1,7 @@
 <?php
-
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Routing\ViewController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,10 +18,8 @@ Route::get('/', function () {
     return view('home');
 });
 
+Route::view('/ulubione', 'ulubione')->name('ulubione');
+Route::view('/zapisane-filtry', 'filtry')->name('filtry');
+Route::view('/ustawienia', 'ustawienia')->name('ustawienia');
+
 Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

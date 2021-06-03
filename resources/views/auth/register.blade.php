@@ -11,7 +11,7 @@
                     <div class="col-12 d-flex justify-content-center login-logo_wrapper">
                         <a href="/"><img class="login-logo" src="../assets/logo.png" alt="Logo - Las Mieszkanias"></a>
                     </div>
-                    <div class="col-sm-8 col-md-10 col-lg-8 col-xl-6 justify-content-center login-panel">
+                    <div class="col-12 col-md-10 col-lg-8 col-xl-6 justify-content-center login-panel">
                         <form method="POST" action="{{ route('register') }}">
                             @csrf
                             <div class="mb-1">
@@ -78,42 +78,4 @@
             </div>
         </div>
     </div>
-
-
-
-
-
-
-            <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
-
-                <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
-                        @csrf
-
-                        <div class="form-group row">
-
-                        </div>
-
-                        <div class="form-group row">
-
-                        </div>
-
-                        <div class="form-group row">
-
-                        </div>
-
-                        <div class="form-group row">
-
-                        </div>
-
-                        <div class="form-group row mb-0">
-
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 @endsection

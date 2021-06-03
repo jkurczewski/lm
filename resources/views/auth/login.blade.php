@@ -15,7 +15,7 @@
                     <div class="col-12 d-flex justify-content-center login-logo_wrapper">
                         <a href="/"><img class="login-logo" src="../assets/logo.png" alt="Logo - Las Mieszkanias"></a>
                     </div>
-                    <div class="col-sm-8 col-md-10 col-lg-8 col-xl-6 justify-content-center login-panel">
+                    <div class="col-10 col-md-10 col-lg-8 col-xl-6 justify-content-center login-panel">
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
                             <div class="mb-3">
