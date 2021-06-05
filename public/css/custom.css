@@ -1,4 +1,10 @@
 /* CONTENT */
+@import url(https://fonts.googleapis.com/css?family=Inter);
+
+:root{
+    --bs-font-sans-serif: "Inter", sans-serif !important;
+}
+
 .btn-custom-solid{
     padding: 7px 40px;
     width: 100%;
@@ -6,6 +12,10 @@
     color: white;
     font-weight: 600;
     border: none;
+}
+.btn-custom-outline.active{
+    background: #111 !important;
+    color: white !important;
 }
 .btn-cards{
     display: flex;
@@ -69,7 +79,10 @@
     border: 2px solid #fff;
     text-decoration: none;
 }
-
+#pills-tab button{
+    border-radius: 0;
+    padding: 5px 16px;
+}
 #app{
     height: 100vh;
     background: white;
@@ -156,10 +169,40 @@ background-size: cover;
 .icon-details{
     display: flex;
     justify-content: center;
+
 }
 .icon-details svg{
-    height: 32px;
+    height: 24px;
 }
 .icon-text{
     text-align: center;
+    line-height: 20px;
+}
+.details-wrapper{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+#pills-tab{
+    display: flex;
+    justify-content: end;
+    margin-bottom: -37px;
+    z-index: 100;
+}
+.border-button{
+    border-radius: 0 4px 0 0 !important;
+}
+.price{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: 900;
+}
+
+/* FAVS */
+.header h1{
+    font-size: 2.5em;
+    font-weight: 700;
+    line-height: 32px;
+    letter-spacing: -0.03em;
+    margin-top: 3rem;
+
 }
