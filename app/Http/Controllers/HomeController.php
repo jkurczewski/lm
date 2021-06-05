@@ -13,7 +13,6 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
     }
 
     /**
@@ -23,6 +22,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $cities = [ 'sieradz' => 'Sieradz', 'poznan' => 'Poznań', 'warszawa' => 'Warszawa', 'a' => 'a', 'b' => 'b', 'c' => 'c', 'd' => 'd', 'e' => 'e', 'f' => 'f', 'g' => 'g', 'h' => 'h', 'i' => 'i', 'j' => 'j', 'k' => 'k', 'l' => 'l'];
+
+        return view('home')->withCities($cities);
     }
 }
