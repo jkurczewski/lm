@@ -4,8 +4,64 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "63a8f9a201870ea0b637ff8fb5c3f2e4",
+    "content-hash": "e732bc13a0c44a40a2b5476a3c4ac4e5",
     "packages": [
+        {
+            "name": "andcarpi/laravel-popper",
+            "version": "0.9.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/andcarpi/laravel-popper.git",
+                "reference": "fd01cbc60a62acd71ff4205ae7a03820b1a9951c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/andcarpi/laravel-popper/zipball/fd01cbc60a62acd71ff4205ae7a03820b1a9951c",
+                "reference": "fd01cbc60a62acd71ff4205ae7a03820b1a9951c",
+                "shasum": ""
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "andcarpi\\Popper\\PopperServiceProvider"
+                    ],
+                    "aliases": {
+                        "Popper": "andcarpi\\Popper\\Facades\\Popper"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "andcarpi\\Popper\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Anderson Carpi",
+                    "email": "kustelac@yahoo.com.br"
+                }
+            ],
+            "description": "A Easy to use Laravel Package, that allows you to generate tooltips in your blade views.",
+            "keywords": [
+                "blade",
+                "laravel",
+                "laravel-package",
+                "popper",
+                "tippy",
+                "tooltip",
+                "view"
+            ],
+            "support": {
+                "issues": "https://github.com/andcarpi/laravel-popper/issues",
+                "source": "https://github.com/andcarpi/laravel-popper/tree/master"
+            },
+            "time": "2019-09-26T02:06:56+00:00"
+        },
         {
             "name": "andreiio/blade-remix-icon",
             "version": "1.0.0",
@@ -321,6 +377,70 @@
                 "source": "https://github.com/codeat3/blade-clarity-icons/tree/1.0.0"
             },
             "time": "2021-05-28T11:21:59+00:00"
+        },
+        {
+            "name": "codeat3/blade-codicons",
+            "version": "1.3.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/codeat3/blade-codicons.git",
+                "reference": "a050e686e95fbd982890247347b33ba81bdb0321"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/codeat3/blade-codicons/zipball/a050e686e95fbd982890247347b33ba81bdb0321",
+                "reference": "a050e686e95fbd982890247347b33ba81bdb0321",
+                "shasum": ""
+            },
+            "require": {
+                "blade-ui-kit/blade-icons": "^1.0",
+                "illuminate/support": "^8.0",
+                "php": "^7.4|^8.0"
+            },
+            "require-dev": {
+                "codeat3/phpcs-styles": "dev-main",
+                "orchestra/testbench": "^6.0",
+                "phpunit/phpunit": "^9.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Codeat3\\BladeCodicons\\BladeCodiconsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Codeat3\\BladeCodicons\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Swapnil Sarwe",
+                    "homepage": "https://swapnilsarwe.com"
+                },
+                {
+                    "name": "Dries Vints",
+                    "homepage": "https://driesvints.com"
+                }
+            ],
+            "description": "A package to easily make use of \"VSCode Codicons\" in your Laravel Blade views.",
+            "homepage": "https://github.com/codeat3/blade-codicons",
+            "keywords": [
+                "blade",
+                "codicons",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/codeat3/blade-codicons/issues",
+                "source": "https://github.com/codeat3/blade-codicons/tree/1.3.2"
+            },
+            "time": "2021-05-14T15:35:48+00:00"
         },
         {
             "name": "codeat3/blade-fluentui-system-icons",
