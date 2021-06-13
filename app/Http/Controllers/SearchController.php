@@ -12,11 +12,13 @@ use Spatie\Geocoder\Facades\Geocoder;
 class SearchController extends Controller
 {
 
-    private $flats = array();
+    public $flats = array();
 
     public function index(Request $request)
     {
         $cities = json_decode(DB::table('cities')->get(['slug']), true);
+
+        session(['flats_count'=>0]);
 
         $this->search(
             $request->input('localization'),
@@ -127,11 +129,21 @@ class SearchController extends Controller
                     $flat_url = $node->filter('h3 > a')->attr('href');
                     $flat_body = $client->request('GET', $flat_url);
 
-                    $localization = $flat_body->filter('div[aria-label="Adres"] > a')->text();
+                    if( $flat_body->filter('div[aria-label="Adres"] > a')->count() )
+                    {
+                        $localization = $flat_body->filter('div[aria-label="Adres"] > a')->text();
+                    }else{
+                        return;
+                    }
 
                     //if ($dir_time = $this->HelperMap($localization, $direction, $dir_time) === NULL) return;
 
-                    $photo = $flat_body->filter('picture > img')->attr('src');
+                    if( $flat_body->filter('picture > img')->count() )
+                    {
+                        $photo = $flat_body->filter('picture > img')->attr('src');
+                    }else{
+                        $photo = 'https://via.placeholder.com/400x400?text=NIe+Znaleziono+Zdj%C4%99cia';
+                    }
 
                     $price = $flat_body->filter('strong[aria-label="Cena"]')->text();
                     $price_int = (float) filter_var($price, FILTER_SANITIZE_NUMBER_FLOAT);
@@ -164,6 +176,8 @@ class SearchController extends Controller
                     }else{
                         $rooms = 'brak informacji';
                     }
+
+                    session(['flats_count', count($this->flats)]);
 
                     return array_push( $this->flats, [
                         'url' => $flat_url,

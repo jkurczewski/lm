@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use MongoDB\Driver\Session;
 
 class HomeController extends Controller
 {
@@ -25,7 +26,7 @@ class HomeController extends Controller
     {
         $cities = json_decode(DB::table('cities')->get(['slug']), true);
 
-        return view('home')->with(['cities' => $cities]);
+        return view('home')->with(['cities' => $cities, 'data'=> session('flats_count')]);
     }
 
     public function query(Request $request)
