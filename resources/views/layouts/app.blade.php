@@ -53,7 +53,7 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="{{ route('ulubione') }}">Ulubione</a></li>
-                        <li><a class="dropdown-item" href="{{ route('filtry') }}">Zapisane filtry</a></li>
+                        <li><a class="dropdown-item" href="{{ route('filters.index') }}">Zapisane filtry</a></li>
                         <li><a class="dropdown-item" href="{{ route('ustawienia') }}">Ustawienia</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="{{ route('logout') }}"
