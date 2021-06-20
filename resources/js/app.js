@@ -30,3 +30,15 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 const app = new Vue({
     el: '#app',
 });
+
+const CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+$.ajax({
+    url: '/get_flats_count',
+    type: 'POST',
+    data: {_token: CSRF_TOKEN},
+    dataType: 'JSON',
+    success: function (data) {
+        console.log(data);
+    }
+});

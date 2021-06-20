@@ -16,7 +16,19 @@ use App\Http\Controllers\SearchController;
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
+TODO:
+- pobieranie odległości do punktu docelowego
+- można dodać mieszkanie do ulubionych
+- można użyć zapisanego filtra
+- poprawić filtrowanie pokoi
+- poprawić oczekiwanie na wyszukiwanie, musi być licznik!
+- dodać różnych użytkowników
+- dodać opcję banowania
+- poprawić dokumentację
+- dodać komentarze
 */
+
+
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::post('/', [HomeController::class, 'query']);
@@ -33,5 +45,6 @@ Route::view('/ustawienia', 'ustawienia')->name('ustawienia');
 Route::post('/ustawienia/destroy/{id}', [UserController::class, 'destroy'])->name('user.destroy')->middleware('auth');
 
 Route::get('/szukaj', [SearchController::class, 'index'])->name('search.index');
+Route::get('/get_flats_count', [SearchController::class, 'getFlatsCount']);
 
 Auth::routes();

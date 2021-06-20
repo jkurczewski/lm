@@ -5007,6 +5007,18 @@ Vue.component('example-component', __webpack_require__(/*! ./components/ExampleC
 var app = new Vue({
   el: '#app'
 });
+var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+$.ajax({
+  url: '/get_flats_count',
+  type: 'POST',
+  data: {
+    _token: CSRF_TOKEN
+  },
+  dataType: 'JSON',
+  success: function success(data) {
+    console.log(data);
+  }
+});
 
 /***/ }),
 

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Goutte\Client;
 use Illuminate\Support\Str;
 use Kolirt\Openstreetmap\Facade\Openstreetmap;
+use MongoDB\Driver\Session;
 use Spatie\Geocoder\Facades\Geocoder;
 
 class SearchController extends Controller
@@ -18,7 +19,7 @@ class SearchController extends Controller
     {
         $cities = json_decode(DB::table('cities')->get(['slug']), true);
 
-        session(['flats_count'=>0]);
+        session(['flats_count' => 0]);
 
         $this->search(
             $request->input('localization'),
@@ -176,8 +177,7 @@ class SearchController extends Controller
                     }else{
                         $rooms = 'brak informacji';
                     }
-
-                    session(['flats_count', count($this->flats)]);
+                    session(['flats_count' => count($this->flats)+1]);
 
                     return array_push( $this->flats, [
                         'url' => $flat_url,
@@ -198,5 +198,13 @@ class SearchController extends Controller
         //$loc_info = Geocoder::getCoordinatesForAddress($localization);
 
        // print_r($loc_info, $dir_info);
+    }
+
+    public function getFlatsCount(){
+
+        return response()->json(array(
+            'success' => true,
+            'data'   => session('flats_count')
+        ));
     }
 }
