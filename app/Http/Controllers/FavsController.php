@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Filter;
+use App\Models\Favs;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
-class FilterController extends Controller
+class FavsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +15,9 @@ class FilterController extends Controller
      */
     public function saved()
     {
-        return view('filters.saved', [
-            'filters' => Filter::where('user_id', '=', auth()->id())->get()
+        return view('favs.saved', [
+            'favs' => Favs::where('user_id', '=', auth()->id())->get(),
+            'rand' => Str::random(5)
         ]);
     }
 
@@ -28,11 +30,12 @@ class FilterController extends Controller
     public function store(Request $request)
     {
         $request->request->add(['user_id' => auth()->id()]);
-        $filter = new Filter($request->all());
-        $filter->save();
+        $fav = new Favs($request->all());
+        $fav->save();
 
-        return redirect()->route('filters.index');
+        return redirect()->route('favs.index');
     }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -42,8 +45,8 @@ class FilterController extends Controller
     public function destroy($id)
     {
         try {
-            Filter::destroy($id);
-            return redirect()->route('filters.index');
+            Favs::destroy($id);
+            return redirect()->route('favs.index');
         }catch (Exception $e){
             //
         }

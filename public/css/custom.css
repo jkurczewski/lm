@@ -278,3 +278,16 @@ background-size: cover;
     height: 350px;
     object-fit: cover;
 }
+
+/*FAVS*/
+.favs-action div{
+    width: 15%;
+    height: auto;
+    display: inline-block;
+    padding: 0;
+}
+.btn-heart_active.deactive{
+    display: inline-block;
+    padding: 0 0.7rem;
+    width: 100%;
+}

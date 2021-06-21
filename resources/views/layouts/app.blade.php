@@ -45,14 +45,14 @@
                     @else
 
                     <li class="nav-item me-md-3 my-3 my-md-0 d-flex align-items-center">
-                        <a class="btn-icon-fill_white {{-- if user has favs change color to red --}}" href="{{ route('ulubione') }}"><x-ri-heart-fill class="icon-avatar icon-heart"/></a>
+                        <a class="btn-icon-fill_white {{-- if user has favs change color to red --}}" href="{{ route('favs.index') }}"><x-ri-heart-fill class="icon-avatar icon-heart"/></a>
                     </li>
                   <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle d-flex align-items-center text-white" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <x-radix-avatar class="icon-avatar me-1"/> <span>{{ Auth::user()->name }}</span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="{{ route('ulubione') }}">Ulubione</a></li>
+                        <li><a class="dropdown-item" href="{{ route('favs.index') }}">Ulubione</a></li>
                         <li><a class="dropdown-item" href="{{ route('filters.index') }}">Zapisane filtry</a></li>
                         <li><a class="dropdown-item" href="{{ route('ustawienia') }}">Ustawienia</a></li>
                         <li><hr class="dropdown-divider"></li>

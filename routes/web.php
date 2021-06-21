@@ -1,4 +1,6 @@
 <?php
+
+use App\Http\Controllers\FavsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Routing\ViewController;
@@ -38,7 +40,11 @@ Route::get('/zapisane-filtry/store', [FilterController::class, 'store'])->name('
 Route::post('/zapisane-filtry/store', [FilterController::class, 'store'])->name('filters.store')->middleware('auth');
 Route::post('/zapisane-filtry/destroy/{id}', [FilterController::class, 'destroy'])->name('filters.destroy')->middleware('auth');
 
-Route::view('/ulubione', 'ulubione')->name('ulubione');
+Route::post('/ulubione', [FavsController::class, 'saved'])->name('favs.index')->middleware('auth');
+Route::get('/ulubione', [FavsController::class, 'saved'])->name('favs.index')->middleware('auth');
+Route::get('/ulubione/store', [FavsController::class, 'store'])->name('favs.store')->middleware('auth');
+Route::post('/ulubione/store', [FavsController::class, 'store'])->name('favs.store')->middleware('auth');
+Route::post('/ulubione/destroy/{id}', [FavsController::class, 'destroy'])->name('favs.destroy')->middleware('auth');
 
 Route::view('/ustawienia', 'ustawienia')->name('ustawienia');
 Route::post('/ustawienia/destroy/{id}', [UserController::class, 'destroy'])->name('user.destroy')->middleware('auth');

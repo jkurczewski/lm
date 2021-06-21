@@ -69,7 +69,7 @@ class HomeController extends Controller
                     "rooms" => 'required|integer|max:10|min:1',
                     "name" => 'unique:filters|required|max:64|min:3',
                 ]);
-                return redirect()->route('filters.store',[$request]);
+                return redirect()->route('filters.store',$request->all());
         }
     }
 }
