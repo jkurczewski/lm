@@ -166,8 +166,9 @@
                         <div class="modal-body mt-4 mb-4">
                             {{-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> --}}
                             <div class="d-flex justify-content-center align-items-center flex-column">
-                                <span class="display-4"><b>{{ Session::get('flats_count') }}</b></span>
+                                <span id="flats" class="display-4"><b>{{ Session::get('flats_count') }}</b></span>
                                 <span class="">Znalezionych mieszkań dla Ciebie!</span>
+                                <span class="small text-secondary">Zrelaksuj się, proces poszukowania może potrwać kilka minut.</span>
                             </div>
                         </div>
                         <div class="slider">

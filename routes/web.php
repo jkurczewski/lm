@@ -21,7 +21,6 @@ TODO:
 - można dodać mieszkanie do ulubionych
 - można użyć zapisanego filtra
 - poprawić filtrowanie pokoi
-- poprawić oczekiwanie na wyszukiwanie, musi być licznik!
 - dodać różnych użytkowników
 - dodać opcję banowania
 - poprawić dokumentację
@@ -45,6 +44,5 @@ Route::view('/ustawienia', 'ustawienia')->name('ustawienia');
 Route::post('/ustawienia/destroy/{id}', [UserController::class, 'destroy'])->name('user.destroy')->middleware('auth');
 
 Route::get('/szukaj', [SearchController::class, 'index'])->name('search.index');
-Route::get('/get_flats_count', [SearchController::class, 'getFlatsCount']);
 
 Auth::routes();
