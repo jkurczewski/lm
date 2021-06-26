@@ -4966,6 +4966,32 @@ var flats = document.getElementById('flats');
 channel.listen('.flats-count', function (data) {
   flats.innerText = JSON.stringify(data.counter);
 });
+jQuery(document).ready(function () {
+  var buttons = document.getElementsByClassName("btn-heart_add");
+
+  var _loop = function _loop(i) {
+    buttons[i].addEventListener("click", function (e) {
+      e.preventDefault();
+      $.ajaxSetup({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+        }
+      });
+      jQuery.ajax({
+        url: window.favs_store,
+        method: 'POST',
+        data: $('#StoreFav-' + buttons[i].id).serialize(),
+        success: function success(result) {
+          alert(result['msg']);
+        }
+      });
+    });
+  };
+
+  for (var i = 0; i < buttons.length; i++) {
+    _loop(i);
+  }
+});
 
 /***/ }),
 

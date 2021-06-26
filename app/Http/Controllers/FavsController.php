@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Favs;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class FavsController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the favourite flats.
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
@@ -22,33 +23,49 @@ class FavsController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created favourite flat in database.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
      */
     public function store(Request $request)
     {
         $request->request->add(['user_id' => auth()->id()]);
         $fav = new Favs($request->all());
-        $fav->save();
+        $check = $fav->save();
 
+        $arr = array('msg' => 'Coś poszło nie tak... Spróbuj jeszcze raz', 'status' => false);
+        if ($check) {
+            $arr = array('msg' => 'Dodałeś mieszkanie do ulubionych!', 'status' => true);
+        }
+
+        return $arr;
+    }
+
+    /**
+     * Remove the specified favourite flat.
+     *
+     * @param \App\Models\Filter $filter
+     */
+    public function destroy($id)
+    {
+        Favs::destroy($id);
         return redirect()->route('favs.index');
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove all favourites flats.
      *
-     * @param  \App\Models\Filter  $filter
-     * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroyAll()
     {
-        try {
-            Favs::destroy($id);
-            return redirect()->route('favs.index');
-        }catch (Exception $e){
-            //
+        $ids = DB::table('favs')
+            ->where('user_id', '=', auth()->id())
+            ->get();
+
+        foreach ($ids as $id) {
+            Favs::destroy($id->id);
         }
+
+        return redirect()->route('favs.index');
     }
 }

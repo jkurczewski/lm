@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use MongoDB\Driver\Session;
 
 class HomeController extends Controller
 {
@@ -26,12 +25,16 @@ class HomeController extends Controller
     {
         $cities = json_decode(DB::table('cities')->get(['slug']), true);
 
-        return view('home')->with(['cities' => $cities, 'data'=> session('flats_count')]);
+        return view('home')->with(['cities' => $cities, 'data' => session('flats_count')]);
     }
+
+    /**
+     * Validate inputs to search for flats and chose between search and save as filter.
+     */
 
     public function query(Request $request)
     {
-        switch ($request->input('action')){
+        switch ($request->input('action')) {
             case "szukaj":
                 $request->validate([
                     "localization" => 'required|max:64|min:3',
@@ -55,7 +58,7 @@ class HomeController extends Controller
                     "rooms" => $request->input('rooms'),
                 ];
 
-                return redirect()->route('search.index',$data);
+                return redirect()->route('search.index', $data);
 
             case "zapisz":
                 $request->validate([
@@ -69,7 +72,7 @@ class HomeController extends Controller
                     "rooms" => 'required|integer|max:10|min:1',
                     "name" => 'unique:filters|required|max:64|min:3',
                 ]);
-                return redirect()->route('filters.store',$request->all());
+                return redirect()->route('filters.store', $request->all());
         }
     }
 }

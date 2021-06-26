@@ -1,9 +1,7 @@
 <?php
 
 use App\Http\Controllers\FavsController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Routing\ViewController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\FilterController;
 use App\Http\Controllers\UserController;
@@ -20,15 +18,9 @@ use App\Http\Controllers\SearchController;
 |
 TODO:
 - pobieranie odległości do punktu docelowego
-- można dodać mieszkanie do ulubionych
-- można użyć zapisanego filtra
-- poprawić filtrowanie pokoi
-- dodać różnych użytkowników
-- dodać opcję banowania
-- poprawić dokumentację
+
 - dodać komentarze
 */
-
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -45,6 +37,7 @@ Route::get('/ulubione', [FavsController::class, 'saved'])->name('favs.index')->m
 Route::get('/ulubione/store', [FavsController::class, 'store'])->name('favs.store')->middleware('auth');
 Route::post('/ulubione/store', [FavsController::class, 'store'])->name('favs.store')->middleware('auth');
 Route::post('/ulubione/destroy/{id}', [FavsController::class, 'destroy'])->name('favs.destroy')->middleware('auth');
+Route::post('/ulubione/destroyAll', [FavsController::class, 'destroyAll'])->name('favs.destroyAll')->middleware('auth');
 
 Route::view('/ustawienia', 'ustawienia')->name('ustawienia');
 Route::post('/ustawienia/destroy/{id}', [UserController::class, 'destroy'])->name('user.destroy')->middleware('auth');

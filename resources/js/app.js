@@ -18,10 +18,29 @@ window.Echo = new Echo({
 const channel = window.Echo.channel('flats');
 const flats = document.getElementById('flats');
 
-
-
 channel.listen('.flats-count', function(data) {
     flats.innerText = (JSON.stringify(data.counter));
+});
+
+jQuery(document).ready(function(){
+    const buttons = document.getElementsByClassName("btn-heart_add");
+    for (let i = 0; i < buttons.length; i++) {
+        buttons[i].addEventListener("click", (e) => {
+            e.preventDefault();
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                }
+            });
+            jQuery.ajax({
+                url: window.favs_store,
+                method: 'POST',
+                data: $('#StoreFav-'+buttons[i].id).serialize(),
+                success: function(result){
+                    alert(result['msg']);
+                }});
+        });
+    }
 });
 
 

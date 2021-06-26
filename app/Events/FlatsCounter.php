@@ -25,12 +25,14 @@ class FlatsCounter implements ShouldBroadcast
     {
         return ['flats'];
     }
+
     public function broadcastAs()
     {
         return 'flats-count';
     }
 
-    public function broadcastWith() {
+    public function broadcastWith()
+    {
         return [
             'counter' => $this->flats
         ];

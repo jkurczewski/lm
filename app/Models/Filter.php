@@ -9,14 +9,14 @@ class Filter extends Model
 {
     use HasFactory;
 
-        /**
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-     protected $fillable = [
-         'user_id',
-         'name',
+    protected $fillable = [
+        'user_id',
+        'name',
         'localization',
         'direction',
         'direction_time',

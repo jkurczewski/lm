@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class FilterController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the saved filters.
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
@@ -20,7 +20,7 @@ class FilterController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created filter in database.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -34,7 +34,7 @@ class FilterController extends Controller
         return redirect()->route('filters.index');
     }
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified filter from database.
      *
      * @param  \App\Models\Filter  $filter
      * @return \Illuminate\Http\Response

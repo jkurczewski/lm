@@ -9,10 +9,15 @@ class Favs extends Model
 {
     use HasFactory;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = [
         'user_id',
         'url',
-        'photo_src',
+        'photo',
         'localization',
         'price',
         'space',
