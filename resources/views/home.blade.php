@@ -218,10 +218,8 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
     </div>
-    <script src="{{ asset('js/cityCheck.js') }}"></script>
 @endsection
