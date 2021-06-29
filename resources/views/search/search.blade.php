@@ -273,8 +273,7 @@
                                         <x-bx-time-five/>
                                     </div>
                                     <div class="mt-2 icon-text">
-                                        Dojazd<br><b class="fs-6">0 min</b>
-                                        {{--                                        Dojazd<br><b class="fs-6">{{ $flat['time'] }}</b>--}}
+                                        Dojazd<br><b class="fs-6">{{$flat['dir_time']}} min</b>
                                     </div>
                                 </div>
                                 <div class="col px-0 details-wrapper d-flex justify-content-center">
@@ -297,7 +296,7 @@
                                         <input type="hidden" value="{{$flat['price']}}" name="price">
                                         <input type="hidden" value="{{$flat['space']}}" name="space">
                                         <input type="hidden" value="{{$flat['rooms']}}" name="rooms">
-                                        <input type="hidden" value="0 min" name="time">
+                                        <input type="hidden" value="{{$flat['dir_time']}}" name="time">
                                         <input type="hidden" value={{ $flat['photo'] }} name="photo">
                                         <input type="hidden" value="{{$flat['url']}}" name="url">
                                         <button id="{{ $flat['rand'] }}" class="mt-4 btn btn-heart_add">

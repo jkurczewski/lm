@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\FavsController;
+use GoogleMaps\GoogleMaps;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\FilterController;

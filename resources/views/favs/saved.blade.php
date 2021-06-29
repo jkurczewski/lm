@@ -69,7 +69,7 @@
                                         <x-bx-time-five/>
                                     </div>
                                     <div class="mt-2 icon-text">
-                                        Dojazd<br><b class="fs-6">{{ $item['time'] }}</b>
+                                        Dojazd<br><b class="fs-6">{{ $item['time'] }} min</b>
                                     </div>
                                 </div>
                                 <div class="col px-0 details-wrapper d-flex justify-content-center">

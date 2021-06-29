@@ -27,7 +27,7 @@ class SearchController extends Controller
         $this->search(
             $request->input('localization'),
             $request->input('direction'),
-            $request->input('dir_time'),
+            $request->input('direction_time'),
             $request->input('min_budget'),
             $request->input('max_budget'),
             $request->input('min_space'),
@@ -48,7 +48,6 @@ class SearchController extends Controller
         ini_set('max_execution_time', '300');
         $client = new Client();
         $url = $this->createURL($localization, $min_b, $max_b, $min_s, $max_s, $rooms);
-
         $crawler = $client->request('GET', $url);
 
         $pagesNumber = ($this->HelperPaginationExist($crawler));
@@ -149,7 +148,6 @@ class SearchController extends Controller
                 //skip ads in Otodom
                 if ($i >= 3) {
 
-
                     if ($node->filter('h3 > a')->count()) {
                         $flat_url = $node->filter('h3 > a')->attr('href');
                     } else {
@@ -165,7 +163,10 @@ class SearchController extends Controller
                         return;
                     }
 
-                    //if ($dir_time = $this->HelperMap($localization, $direction, $dir_time) === NULL) return;
+                    $time = $this->HelperMap($localization, $direction);
+                    if ($time == false || $time > intval($dir_time)){
+                        return;
+                    }
 
                     if ($flat_body->filter('picture > img')->count()) {
                         $photo = $flat_body->filter('picture > img')->attr('src');
@@ -213,7 +214,7 @@ class SearchController extends Controller
                             'rooms' => $rooms,
                             'photo' => $photo,
                             'rand' => Str::random(5),
-                            'dir_time' => $dir_time,
+                            'dir_time' => $time,
                         ]);
 
                     } else {
@@ -227,7 +228,7 @@ class SearchController extends Controller
                             'rooms' => $rooms,
                             'photo' => $photo,
                             'rand' => Str::random(5),
-                            'dir_time' => $dir_time,
+                            'dir_time' => $time,
                         ]);
 
                     }
@@ -240,10 +241,24 @@ class SearchController extends Controller
      * Check for estimated route duration to check if flat is an near as user wants to.
      * Function is using Google Maps API
      */
-    public function HelperMap($localization, $direction, $dir_time)
+    public function HelperMap($localization, $direction)
     {
-        //$loc_info = Geocoder::getCoordinatesForAddress($localization);
+        $response = \GoogleMaps::load('directions')
+            ->setParam ([
+                'origin' =>$localization,
+                'destination' => $direction,
+                'mode' => 'transit',
+                'departure_time' => strtotime('today 8am'),
+                'transit_routing_preference' => 'less_walking',
 
-        // print_r($loc_info, $dir_info);
+            ])
+            ->get();
+
+        $json = json_decode($response);
+        $time = $json->routes[0]->legs[0]->duration->value;
+        $mins = ceil($time/60);
+
+        return $mins;
+
     }
 }

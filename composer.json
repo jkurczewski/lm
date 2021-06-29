@@ -7,6 +7,8 @@
     "require": {
         "php": "^7.3|^8.0",
         "ext-curl": "*",
+        "ext-json": "*",
+        "alexpechkarev/google-maps": "^8.0",
         "andcarpi/laravel-popper": "^0.9.4",
         "andreiio/blade-remix-icon": "^1.0",
         "blade-ui-kit/blade-icons": "^1.0",
@@ -26,8 +28,7 @@
         "mallardduck/blade-boxicons": "^2.1",
         "pusher/pusher-php-server": "^7.0",
         "spatie/geocoder": "^3.10",
-        "symfony/css-selector": "^5.3",
-      "ext-json": "*"
+        "symfony/css-selector": "^5.3"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
