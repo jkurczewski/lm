@@ -25,7 +25,7 @@
                     </div>
                     <div class="col-12 col-lg-5">
                         <label for="cities" class="form-label mb-0 mt-2 mb-md-1">Lokalizacja miejsca docelowego <span
-                                    @popper(Podaj lokalizację miejsca w którym najczęściej bywasz lub zależy Ci na
+                                    @popper(Podaj lokalizację miejsca, w którym najczęściej bywasz lub zależy Ci na
                                     dobrej komunikacji, np. szkoła, praca, dworzec kolejowy)><x-codicon-info
                                         class="icon-info"/></span></label>
                         <input name="direction" class="form-control @error('direction') is-invalid @enderror"
@@ -200,7 +200,7 @@
                             <div class="d-flex justify-content-center align-items-center flex-column">
                                 <span id="flats" class="display-4"><b>0</b></span>
                                 <span class="">Znalezionych mieszkań dla Ciebie!</span>
-                                <span class="small text-secondary">Zrelaksuj się, proces poszukowania może potrwać kilka minut.</span>
+                                <span class="small text-secondary">Zrelaksuj się, proces poszukiwania może potrwać kilka minut.</span>
                             </div>
                         </div>
                         <div class="slider">
@@ -273,7 +273,7 @@
                                         <x-bx-time-five/>
                                     </div>
                                     <div class="mt-2 icon-text">
-                                        Dojazd<br><b class="fs-6">{{$flat['dir_time']}} min</b>
+                                        Dojazd<br><b class="fs-6">{{$flat['dir_time']}}</b>
                                     </div>
                                 </div>
                                 <div class="col px-0 details-wrapper d-flex justify-content-center">

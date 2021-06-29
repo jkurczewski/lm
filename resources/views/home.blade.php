@@ -31,7 +31,7 @@
                             </div>
                             <div class="col-12 col-lg-5">
                                 <label for="cities" class="form-label mb-0 mt-2 mb-md-1">Lokalizacja miejsca docelowego
-                                    <span @popper(Podaj lokalizację miejsca w którym najczęściej bywasz lub zależy Ci na
+                                    <span @popper(Podaj lokalizację miejsca, w którym najczęściej bywasz lub zależy Ci na
                                           dobrej komunikacji, np. szkoła, praca, dworzec kolejowy)><x-codicon-info
                                                 class="icon-info"/></span></label>
                                 <input name="direction" class="form-control @error('direction') is-invalid @enderror"

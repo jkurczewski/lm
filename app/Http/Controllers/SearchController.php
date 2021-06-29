@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Goutte\Client;
 use Illuminate\Support\Str;
+use function PHPUnit\Framework\isEmpty;
 
 class SearchController extends Controller
 {
@@ -163,10 +164,16 @@ class SearchController extends Controller
                         return;
                     }
 
-                    $time = $this->HelperMap($localization, $direction);
-                    if ($time == false || $time > intval($dir_time)){
+                    $time = $this->HelperMap($localization, $direction) ;
+                    if ($time > intval($dir_time)){
                         return;
+                    }elseif ($time == null){
+                        $time = 'Brak danych';
+                    }else{
+                        $time .= 'min';
                     }
+
+
 
                     if ($flat_body->filter('picture > img')->count()) {
                         $photo = $flat_body->filter('picture > img')->attr('src');
@@ -255,10 +262,16 @@ class SearchController extends Controller
             ->get();
 
         $json = json_decode($response);
-        $time = $json->routes[0]->legs[0]->duration->value;
-        $mins = ceil($time/60);
 
-        return $mins;
+        if ($json->routes[0]->legs[0]->duration->value ?? null){
+            return ceil($json->routes[0]->legs[0]->duration->value/60);
+        }else{
+            return null;
+        }
+
+
+
+
 
     }
 }
