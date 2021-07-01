@@ -1,62 +1,52 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+##### _LAS MIESZKANIAS v.0.1 (BETA EDITION)_
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+----
 
-## About Laravel
+## Jak uruchomić Las Mieszkanias (LM) na lokalnym serwerze, w systemie operacyjnym Windows.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+----
+### Aplikacja została stworzona w oparciu o poniższą specyfikację.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- Windows 10 z najnowszymi aktualizacjami
+- Composer 2.0.12
+- XAMPP v.3.2.4
+- npm@6.14.13
+- PHP 8.0.1
+- Laravel Framework 8.49.0
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Learning Laravel
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+###### LM zostało przetestowane bazując na konkretnej specyfikacji. Zróżnicowania sprzętowe lub programowe, a także inne nieścisłości mogą powodować problemy w działaniu aplikacji.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
+### Proces uruchomienia LM na nowej maszynie z zainstalowanym system Windows
+1. Upewnij się, że posiadasz pełną kopię plików aplikacji (włącznie z ukrytymi plikami, włącznie z .env)
+2. Upewnij się, czy posiadasz wersje oprogramowania w wersjach przynajmniej tak wysokich, jak te wymienione w specyfikacji maszyny developerskiej.
+3. Skopiuj pliki Lm do docelowej lokalizacji.
+4. Uruchom Terminal/PowerShell jako Administrator i przejdź do lokalizacji aplikacji.
+5. Wykonaj polecenie `composer install`
+6. Wykonaj polecenie `php artisan key:generate`
+7. Wykonaj polecenie `php artisan cache:clear`
+8. Uruchom oprogramowanie XAMPP, a następnie uruchom moduły `Apache` oraz `MySQL`
+9. Przejdź do lokalizacji `http://localhost/phpmyadmin`
+10. Utwórz nową bazę danych o nazwie `las-mieszkanias`
+11. Zaimportuj tabele do bazy danych z pliku `las-mieszkanias.sql`
+11. Wykonaj polecenie `php artisan serve`
+12. Aplikacja powinna być dostępna pod adresem `http://127.0.0.1:8000`
 
-## Laravel Sponsors
+---
+### Radzenie sobie z problemami i błędami
+Z uwagi na to, że aplikacja nie opuściła fazy beta, nie można oczekiwać od niej pełnej niezawodoności. Specyfika core aplikacji, który bazuje na dynamicznie zbieranych danych z zewnętrznego serwisu generuje błędy trudne do przewidzenia i wymagające rozwagi podczas użytkowania. 
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Pomimo tego, ML zawiera zakładane MVP, które pozwala na poprawne korzystanie z funkcji. Jeśli doświadczysz błędów w kompilacji, jeszcze przed poprawnym uruchomieniem aplikacji, prawdopodobnie posiadasz błędy w konfiguracji oprogramowania pomocnicznego. 
 
-### Premium Partners
+---
+### Jak korzystać z aplikacji
+Las Mieszkanias to crawler pozwalający na przyspieszone filtrowanie tysięcy mieszkać w ciągu zaledwie kilku minut.
+Aplikacja została jednak oparta o dynamiczne pobieranie danych z zewnętrznego listingu mieszkań, co znacznie oddziału na prędkość działania aplikacji.
+Poniżej kilka rad, które usprawniają korzystanie z systemu:
+- Posiadanie konta w serwisie, pozwoli Ci na zapisanie do późniejszego użytku ulubionych mieszkać oraz predefiniowanych filtrów.
+- Postaraj się maksymalnie dopasować filtry do swoich potrzeb.
+- Wyszukiwarka potrzebuje czasem nawet do kilku minut, by znaleźć idealne oferty dla Ciebie. Nie odświeżaj w tym czasie strony.
+- Jeśli w ciągu kilkunastu sekund po uruchomieniu wyszukiwarki otrzymasz 0 wyników - powtórz proces wyszukiwania.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
