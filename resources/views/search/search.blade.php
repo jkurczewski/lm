@@ -10,7 +10,7 @@
                     <div class="col-12 col-lg-4">
                         <label for="cities" class="form-label mb-0 mt-2 mb-md-1">Miejscowość</label>
                         <input name="localization" class="form-control @error('localization') is-invalid @enderror"
-                               list="datalistOptions" value="{{ old('localization') }}Poznań" id="exampleDataList">
+                               list="datalistOptions" value="{{ $req['localization'] }}" id="exampleDataList">
                         <datalist id="datalistOptions">
                             @foreach ($cities as $city)
                                 <option value="{{ $city['slug'] }}">
@@ -29,7 +29,7 @@
                                     dobrej komunikacji, np. szkoła, praca, dworzec kolejowy)><x-codicon-info
                                         class="icon-info"/></span></label>
                         <input name="direction" class="form-control @error('direction') is-invalid @enderror"
-                               list="datalistOptions" value="{{ old('direction') }}ul. Dąbrowskiego 5, Poznań"
+                               list="datalistOptions" value="{{ $req['direction'] }}"
                                id="exampleDataList">
                         <datalist id="datalistOptions">
                             @foreach ($cities as $city)
@@ -54,7 +54,7 @@
                         <div class="input-group">
                             <input name="direction_time" type="number"
                                    class="form-control @error('direction_time') is-invalid @enderror"
-                                   value="{{ old('direction_time') }}35">
+                                   value="{{$req['direction_time'] }}">
                             <span class="input-group-text" id="basic-addon2">min</span>
 
                             @error('direction_time')
@@ -70,12 +70,12 @@
                         <label for="cities" class="form-label mb-0 mt-2 mb-md-1">Miesięczna wysokość czynszu</label>
                         <div class="input-group">
                             <input name="min_budget" type="number" min="100" step="1"
-                                   value="{{ old('min_budget') }}1200" aria-label="First name"
+                                   value="{{ $req['min_budget']  }}" aria-label="First name"
                                    class="form-control @error('min_budget') is-invalid @enderror">
                             <span class="input-group-text">zł</span>
                             <span class="filter-price mx-3">-</span>
                             <input name="max_budget" type="number" min="100" step="1"
-                                   value="{{ old('max_budget') }}1300" aria-label="First name"
+                                   value="{{ $req['max_budget']  }}" aria-label="First name"
                                    class="form-control @error('max_budget') is-invalid @enderror">
                             <span class="input-group-text ">zł</span>
                             @error('min_budget')
@@ -95,12 +95,12 @@
                     <div class="col-12 col-lg-5">
                         <label for="cities" class="form-label mb-0 mt-2 mb-md-1">Powierzchnia mieszkania</label>
                         <div class="input-group">
-                            <input name="min_space" type="number" min="15" step="1" value="{{ old('min_space') }}50"
+                            <input name="min_space" type="number" min="15" step="1" value="{{ $req['min_space']  }}"
                                    aria-label="First name"
                                    class="form-control @error('min_space') is-invalid @enderror">
                             <span class="input-group-text">m2</span>
                             <span class="filter-price mx-3">-</span>
-                            <input name="max_space" type="number" min="16" step="1" value="{{ old('max_space') }}60"
+                            <input name="max_space" type="number" min="16" step="1" value="{{ $req['max_space']  }}"
                                    aria-label="First name"
                                    class="form-control @error('max_space') is-invalid @enderror">
                             <span class="input-group-text ">m2</span>
@@ -121,7 +121,7 @@
                         <label for="cities" class="form-label mb-0 mt-2 mb-md-1">Liczba pokoi</label>
                         <div class="input-group">
                             <span class="input-group-text">Min</span>
-                            <input name="rooms" type="number" min="1" step="1" value="{{ old('rooms') }}2"
+                            <input name="rooms" type="number" min="1" step="1" value="{{ $req['rooms'] }}"
                                    aria-label="First name"
                                    class="form-control @error('max_space') is-invalid @enderror">
 

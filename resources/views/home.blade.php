@@ -13,9 +13,9 @@
                         <div class="row">
                             <div class="col-12 col-lg-4">
                                 <label for="cities" class="form-label mb-0 mt-2 mb-md-1">Miejscowość</label>
-                                <input name="localization"
+                                <input name="localization" placeholder="Poznań"
                                        class="form-control @error('localization') is-invalid @enderror"
-                                       list="datalistOptions" value="{{ old('localization') }}Poznań"
+                                       list="datalistOptions" value="{{ old('localization') }}"
                                        id="exampleDataList">
                                 <datalist id="datalistOptions">
                                     @foreach ($cities as $city)
@@ -34,8 +34,8 @@
                                     <span @popper(Podaj lokalizację miejsca, w którym najczęściej bywasz lub zależy Ci na
                                           dobrej komunikacji, np. szkoła, praca, dworzec kolejowy)><x-codicon-info
                                                 class="icon-info"/></span></label>
-                                <input name="direction" class="form-control @error('direction') is-invalid @enderror"
-                                       list="datalistOptions" value="{{ old('direction') }}ul. Dąbrowskiego 5, Poznań"
+                                <input name="direction" placeholder="Poznań, ul. Powstańców Wielkopolskich 8/1" class="form-control @error('direction') is-invalid @enderror"
+                                       list="datalistOptions" value="{{ old('direction') }}"
                                        id="exampleDataList">
                                 <datalist id="datalistOptions">
                                     @foreach ($cities as $city)
@@ -53,9 +53,9 @@
                                 <label for="cities" class="form-label mb-0 mt-2 mb-md-1">Max. czas podróży <span
                                             @popper(Podaj w minutach maksymalny czas dojazdu do lokalizacji docelowej)><x-codicon-info class="icon-info"/></span></label>
                                 <div class="input-group">
-                                    <input name="direction_time" type="number"
+                                    <input name="direction_time" type="number" placeholder="30"
                                            class="form-control @error('direction_time') is-invalid @enderror"
-                                           value="{{ old('direction_time') }}35">
+                                           value="{{ old('direction_time') }}">
                                     <span class="input-group-text" id="basic-addon2">min</span>
 
                                     @error('direction_time')
@@ -71,13 +71,13 @@
                                 <label for="cities" class="form-label mb-0 mt-2 mb-md-1">Miesięczna wysokość
                                     czynszu</label>
                                 <div class="input-group">
-                                    <input name="min_budget" type="number" min="100" step="100"
-                                           value="{{ old('min_budget') }}1200" aria-label="First name"
+                                    <input name="min_budget" type="number" min="100" step="100" placeholder="1400"
+                                           value="{{ old('min_budget') }}" aria-label="First name"
                                            class="form-control @error('min_budget') is-invalid @enderror">
                                     <span class="input-group-text">zł</span>
                                     <span class="filter-price mx-3">-</span>
-                                    <input name="max_budget" type="number" min="100" step="100"
-                                           value="{{ old('max_budget') }}1300" aria-label="First name"
+                                    <input name="max_budget" type="number" min="100" step="100" placeholder="2000"
+                                           value="{{ old('max_budget') }}" aria-label="First name"
                                            class="form-control @error('max_budget') is-invalid @enderror">
                                     <span class="input-group-text ">zł</span>
                                     @error('min_budget')
@@ -98,12 +98,12 @@
                                 <label for="cities" class="form-label mb-0 mt-2 mb-md-1">Powierzchnia mieszkania</label>
                                 <div class="input-group">
                                     <input name="min_space" type="number" min="15" step="1"
-                                           value="{{ old('min_space') }}50" aria-label="First name"
+                                           value="{{ old('min_space') }}" aria-label="First name" placeholder="40"
                                            class="form-control @error('min_space') is-invalid @enderror">
                                     <span class="input-group-text">m2</span>
                                     <span class="filter-price mx-3">-</span>
                                     <input name="max_space" type="number" min="16" step="1"
-                                           value="{{ old('max_space') }}60" aria-label="First name"
+                                           value="{{ old('max_space') }}" aria-label="First name" placeholder="80"
                                            class="form-control @error('max_space') is-invalid @enderror">
                                     <span class="input-group-text ">m2</span>
                                     @error('min_space')
@@ -124,7 +124,7 @@
                                 <label for="cities" class="form-label mb-0 mt-2 mb-md-1">Liczba pokoi</label>
                                 <div class="input-group">
                                     <span class="input-group-text">Min</span>
-                                    <input name="rooms" type="number" min="1" step="1" value="{{ old('rooms') }}2"
+                                    <input name="rooms" type="number" min="1" step="1" value="{{ old('rooms') }}"
                                            aria-label="First name"
                                            class="form-control @error('max_space') is-invalid @enderror">
 

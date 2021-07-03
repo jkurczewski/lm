@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Goutte\Client;
 use Illuminate\Support\Str;
-use function PHPUnit\Framework\isEmpty;
 
 class SearchController extends Controller
 {
@@ -38,7 +37,18 @@ class SearchController extends Controller
 
         $count_flats = count($this->flats);
 
-        return view('search.search')->with(['cities' => $cities, 'flats' => $count_flats, 'data' => $this->flats]);
+        $req = [
+            'localization' => $request->input('localization'),
+            'direction' => $request->input('direction'),
+            'direction_time' => $request->input('direction_time'),
+            'min_budget' => $request->input('min_budget'),
+            'max_budget' => $request->input('max_budget'),
+            'min_space' => $request->input('min_space'),
+            'max_space' => $request->input('max_space'),
+            'rooms' => $request->input('rooms')
+        ];
+
+        return view('search.search')->with(['cities' => $cities, 'flats' => $count_flats, 'data' => $this->flats, 'req' => $req]);
     }
 
     /**
@@ -61,62 +71,48 @@ class SearchController extends Controller
 
     /**
      * Create Otodom URL from passed inputs and saved url parts
-     *
-     * OTODOM QUERY STRING SCHEMA
-     * HEAD->https://www.otodom.pl/wynajem/mieszkanie/
-     * CITY->gorzow-wielkopolski/
-     * QUERY_STARTS->?
-     * QUERY_KEY->search or &search (if second and more)
-     * QUERIES:
-     * MIN_BUDGET->[filter_float_price%3Afrom]=/VALUE/
-     * MAX_BUDGET->[filter_float_price%3Ato]=/VALUE/
-     * MIN_SPACE->[filter_float_m%3Afrom]=/VALUE/
-     * MAX_SPACE->[filter_float_m%3Ato]=/VALUE/
-     * ROOMS:
-     * [filter_enum_rooms_num][0]=3
-     * [filter_enum_rooms_num][1]=2
-     * [filter_enum_rooms_num][2]=1
-     * PAGING->&page=2,3,4,5,...
      */
     public function createURL($localization, $min_b, $max_b, $min_s, $max_s, $rooms): string
     {
-        $head = 'https://www.otodom.pl/wynajem/mieszkanie/';
+        $head = 'https://www.otodom.pl/pl/oferty/wynajem/mieszkanie/';
         $city = DB::table('cities')
             ->where('slug', '=', $localization)
             ->pluck('name');
-        $city = $city[0] . '/?';
+        $city = $city[0] . '?';
         $query_key = 'search';
         $and = '&';
-        $min_budget = '[filter_float_price%3Afrom]=' . $min_b;
-        $max_budget = '[filter_float_price%3Ato]=' . $max_b;
-        $min_space = '[filter_float_m%3Afrom]=' . $min_s;
-        $max_space = '[filter_float_m%3Ato]=' . $max_s;
+        $min_budget = 'priceMin=' . $min_b;
+        $max_budget = 'priceMax=' . $max_b;
+        $min_space = 'areaMin=' . $min_s;
+        $max_space = 'areaMax=' . $max_s;
         $min_rooms = array();
 
-        $index = 0;
+        $values = [1 => 'ONE', 2 => 'TWO', 3 => 'THREE', 4 => 'FOUR', 5 => 'FIVE', 6 => 'SIX', 7 => 'SEVEN', 8 => 'EIGHT', 9 => 'NINE', 10 => 'TEN'];
+
         //rooms append
-        while ($rooms <= 10) {
-            array_push($min_rooms, '[filter_enum_rooms_num][' . $index . ']=' . $rooms);
-            $index++;
-            $rooms++;
+        $rooms_array = 'roomsNumber=[';
+        for (; $rooms<=10; $rooms++){
+            $rooms_array .= $values[$rooms];
+            if ($rooms < 10){
+                $rooms_array .= '%2C';
+            }
         }
+        $rooms_array .= ']';
+
+
 
         $url =
             $head .
             $city .
-            $query_key .
             $min_budget .
-            $and . $query_key .
+            $and .
             $max_budget .
-            $and . $query_key .
+            $and .
             $min_space .
-            $and . $query_key .
-            $max_space;
-
-
-        foreach ($min_rooms as $room) {
-            $url = $url . $and . $query_key . $room;
-        }
+            $and .
+            $max_space .
+            $and .
+            $rooms_array;
 
         return $url;
     }
@@ -126,11 +122,7 @@ class SearchController extends Controller
      */
     public function HelperPaginationExist($crawler)
     {
-        if ($crawler->filter('ul.pager > li')->eq(4)->count()) {
-            return $crawler->filter('ul.pager > li')->eq(4)->text();
-        } else {
-            return 1;
-        }
+        return intval(ceil($crawler->filter('span.css-klxieh')->text()/24));
     }
 
     /**
@@ -138,109 +130,103 @@ class SearchController extends Controller
      */
     public function HelperGetFlats($url, $client, $max_b, $direction, $dir_time, $uri)
     {
-        //check if crawler didn't get wrong uri
-        if (str_contains($uri, 'oferty')) {
-            $this->index();
-        }
 
         $crawler = $client->request('GET', $url);
-        $crawler->filter('article')->each(
-            function ($node, $i) use ($client, $max_b, $direction, $dir_time) {
-                //skip ads in Otodom
-                if ($i >= 3) {
+        $crawler->filter('div[role="main"]')->filter('ul')->filter('li.css-x9km8e')->each(
+            function ($node, $index) use ($client, $max_b, $direction, $dir_time) {
 
-                    if ($node->filter('h3 > a')->count()) {
-                        $flat_url = $node->filter('h3 > a')->attr('href');
-                    } else {
-                        return;
-                    }
+                if ($index < 2) return;
 
-                    //get flat's data
-                    $flat_body = $client->request('GET', $flat_url);
-
-                    if ($flat_body->filter('div[aria-label="Adres"] > a')->count()) {
-                        $localization = $flat_body->filter('div[aria-label="Adres"] > a')->text();
-                    } else {
-                        return;
-                    }
-
-                    $time = $this->HelperMap($localization, $direction) ;
-                    if ($time > intval($dir_time)){
-                        return;
-                    }elseif ($time == null){
-                        $time = 'Brak danych';
-                    }else{
-                        $time .= 'min';
-                    }
-
-
-
-                    if ($flat_body->filter('picture > img')->count()) {
-                        $photo = $flat_body->filter('picture > img')->attr('src');
-                    } else {
-                        $photo = 'https://via.placeholder.com/400x400?text=NIe+Znaleziono+Zdj%C4%99cia';
-                    }
-
-                    if ($flat_body->filter('div[aria-label="Powierzchnia"]')->filter('div.css-1ytkscc')->count()) {
-                        $space = $flat_body->filter('div[aria-label="Powierzchnia"]')->filter('div.css-1ytkscc')->text();
-                    } else {
-                        $space = 'brak informacji';
-                    }
-
-                    if ($flat_body->filter('div[aria-label="Liczba pokoi"]')->filter('div.css-1ytkscc')->count()) {
-                        $rooms = $flat_body->filter('div[aria-label="Liczba pokoi"]')->filter('div.css-1ytkscc')->text();
-                    } else {
-                        $rooms = 'brak informacji';
-                    }
-
-                    //fire event to flats counter in search modal
-                    event(new FlatsCounter(count($this->flats)));
-
-                    $price = $flat_body->filter('strong[aria-label="Cena"]')->text();
-                    $price_int = (float)filter_var($price, FILTER_SANITIZE_NUMBER_FLOAT);
-                    $isRent = $flat_body->filter('div[aria-label="Czynsz - dodatkowo"]')->filter('div.css-1ytkscc')->count();
-
-                    //order flats dividing them by these with rent and without;
-                    //flats with summed montly price + rent goes at the beginning of array
-                    //flats without rent goes at the end of array
-                    if ($isRent) {
-                        $rent = $flat_body->filter('div[aria-label="Czynsz - dodatkowo"]')->filter('div.css-1ytkscc')->text();
-                        $rent_int = (float)filter_var($rent, FILTER_SANITIZE_NUMBER_FLOAT);
-
-                        $full_price = $price_int + $rent_int;
-
-                        if ($full_price > $max_b) return;
-
-                        $full_price .= ' zł/msc';
-
-                        return array_unshift($this->flats, [
-                            'url' => $flat_url,
-                            'localization' => $localization,
-                            'price' => $full_price,
-                            'space' => $space,
-                            'rooms' => $rooms,
-                            'photo' => $photo,
-                            'rand' => Str::random(5),
-                            'dir_time' => $time,
-                        ]);
-
-                    } else {
-                        $full_price = $price . '/msc + czynsz ';
-
-                        return array_push($this->flats, [
-                            'url' => $flat_url,
-                            'localization' => $localization,
-                            'price' => $full_price,
-                            'space' => $space,
-                            'rooms' => $rooms,
-                            'photo' => $photo,
-                            'rand' => Str::random(5),
-                            'dir_time' => $time,
-                        ]);
-
-                    }
+                if ($node->filter('a')->count()) {
+                    $flat_url = 'https://www.otodom.pl' . $node->filter('a')->attr('href');
+                } else {
+                    return;
                 }
 
+                //get flat's data
+                $flat_body = $client->request('GET', $flat_url);
+
+                if ($flat_body->filter('div[aria-label="Adres"] > a')->count()) {
+                    $localization = $flat_body->filter('div[aria-label="Adres"] > a')->text();
+                } else {
+                    return;
+                }
+
+                $time = $this->HelperMap($localization, $direction) ;
+                if ($time > intval($dir_time)){
+                    return;
+                }elseif ($time == null){
+                    $time = 'Brak danych';
+                }else{
+                    $time .= 'min';
+                }
+
+
+
+                if ($flat_body->filter('picture > img')->count()) {
+                    $photo = $flat_body->filter('picture > img')->attr('src');
+                } else {
+                    $photo = 'https://via.placeholder.com/400x400?text=NIe+Znaleziono+Zdj%C4%99cia';
+                }
+
+                if ($flat_body->filter('div[aria-label="Powierzchnia"]')->filter('div.css-1ytkscc')->count()) {
+                    $space = $flat_body->filter('div[aria-label="Powierzchnia"]')->filter('div.css-1ytkscc')->text();
+                } else {
+                    $space = 'brak informacji';
+                }
+
+                if ($flat_body->filter('div[aria-label="Liczba pokoi"]')->filter('div.css-1ytkscc')->count()) {
+                    $rooms = $flat_body->filter('div[aria-label="Liczba pokoi"]')->filter('div.css-1ytkscc')->text();
+                } else {
+                    $rooms = 'brak informacji';
+                }
+
+                //fire event to flats counter in search modal
+                event(new FlatsCounter(count($this->flats)));
+
+                $price = $flat_body->filter('strong[aria-label="Cena"]')->text();
+                $price_int = (float)filter_var($price, FILTER_SANITIZE_NUMBER_FLOAT);
+                $isRent = $flat_body->filter('div[aria-label="Czynsz - dodatkowo"]')->filter('div.css-1ytkscc')->count();
+
+                //order flats dividing them by these with rent and without;
+                //flats with summed montly price + rent goes at the beginning of array
+                //flats without rent goes at the end of array
+                if ($isRent) {
+                    $rent = $flat_body->filter('div[aria-label="Czynsz - dodatkowo"]')->filter('div.css-1ytkscc')->text();
+                    $rent_int = (float)filter_var($rent, FILTER_SANITIZE_NUMBER_FLOAT);
+
+                    $full_price = $price_int + $rent_int;
+
+                    if ($full_price > $max_b) return;
+
+                    $full_price .= ' zł/msc';
+
+                    return array_unshift($this->flats, [
+                        'url' => $flat_url,
+                        'localization' => $localization,
+                        'price' => $full_price,
+                        'space' => $space,
+                        'rooms' => $rooms,
+                        'photo' => $photo,
+                        'rand' => Str::random(5),
+                        'dir_time' => $time,
+                    ]);
+
+                } else {
+                    $full_price = $price . '/msc + czynsz ';
+
+                    return array_push($this->flats, [
+                        'url' => $flat_url,
+                        'localization' => $localization,
+                        'price' => $full_price,
+                        'space' => $space,
+                        'rooms' => $rooms,
+                        'photo' => $photo,
+                        'rand' => Str::random(5),
+                        'dir_time' => $time,
+                    ]);
+
+                }
             });
     }
 
